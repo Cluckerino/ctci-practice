@@ -46,5 +46,13 @@ namespace Problems
             }
             return kthNode.Value;
         }
+
+        /// <summary>
+        /// Treat the list as digits and add them.
+        /// </summary>
+        public static LinkedList<int> P05_SumLists(LinkedList<int> a, LinkedList<int> b)
+        {
+            return new LinkedList<int>(new[] { 0 });
+        }
     }
 }

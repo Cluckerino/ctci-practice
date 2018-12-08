@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Problems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,6 +32,38 @@ namespace Tests
             var input = new LinkedList<int>(Enumerable.Range(1, 10));
             var expected = 10 - kth;
             Assert.That(Chapter02.P02_KthToLast(input, kth), Is.EqualTo(expected));
+        }
+
+        public LinkedList<int> P05_Listify(int num)
+        {
+            var digits = new LinkedList<int>();
+            var remaining = num;
+            while (remaining > 0)
+            {
+                remaining = Math.DivRem(remaining, 10, out var digit);
+                digits.AddLast(digit);
+            }
+            return digits;
+        }
+
+        [Test]
+        public void P05_ListifyTest()
+        {
+            var input = 14325;
+            var expected = new[] { 5, 2, 3, 4, 1 };
+            Assert.That(P05_Listify(input), Is.EqualTo(expected));
+        }
+
+        [TestCase(617, 295, 617 + 295)]
+        public void P05_SumList(int a, int b, int sum)
+        {
+            var aL = P05_Listify(a);
+            var bL = P05_Listify(b);
+            var expected = P05_Listify(sum);
+
+            var actual = Chapter02.P05_SumLists(aL, bL);
+
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }
