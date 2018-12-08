@@ -19,5 +19,13 @@ namespace Problems
             }
             return true;
         }
+
+        /// <summary>
+        /// Are the two inputs one deletion/addition/change away from each other?
+        /// </summary>
+        public static bool P05_OneAway(string input1, string input2)
+        {
+            return false;
+        }
     }
 }
