@@ -25,7 +25,55 @@ namespace Problems
         /// </summary>
         public static bool P05_OneAway(string input1, string input2)
         {
+            if (input1.Length == input2.Length)
+                return P05_OneAway_SingleReplace(input1, input2);
+            else if (input1.Length == input2.Length + 1)
+                return P05_OneAway_SingleShift(input1, input2);
+            else if (input1.Length + 1 == input2.Length)
+                return P05_OneAway_SingleShift(input2, input1);
+
             return false;
+        }
+
+        /// <summary>
+        /// Checks strings of equal length for a single change.
+        /// </summary>
+        private static bool P05_OneAway_SingleReplace(string input1, string input2)
+        {
+            var firstDiff = false;
+            for (int i = 0; i < input1.Length; i++)
+            {
+                if (input1[i] == input2[i]) continue;
+
+                if (firstDiff) return false;
+
+                firstDiff = true;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if strings are different by a single insertion/deletion.
+        /// </summary>
+        private static bool P05_OneAway_SingleShift(string longer, string shorter)
+        {
+            int li = 0, si = 0;
+            var firstDiff = false;
+            while (si < shorter.Length)
+            {
+                if (longer[li] == shorter[si])
+                {
+                    ++li;
+                    ++si;
+                    continue;
+                }
+
+                if (firstDiff) return false;
+
+                firstDiff = true;
+                ++li;
+            }
+            return true;
         }
     }
 }
