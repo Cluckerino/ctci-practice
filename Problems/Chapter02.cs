@@ -31,7 +31,20 @@ namespace Problems
         /// <returns>The kth to last element.</returns>
         public static int P02_KthToLast(LinkedList<int> singlyInput, int kth)
         {
-            return 0;
+            var headNode = singlyInput.First;
+            var kthNode = headNode;
+            // Counter to keep track of how far we are from the head node.
+            var kthCounter = kth;
+            // Check next; we don't need to iterate both pointers if this is the last node.
+            while (headNode.Next != null)
+            {
+                if (kthCounter == 0)
+                    kthNode = kthNode.Next;
+                else
+                    --kthCounter;
+                headNode = headNode.Next;
+            }
+            return kthNode.Value;
         }
     }
 }
