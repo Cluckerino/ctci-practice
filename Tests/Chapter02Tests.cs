@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using Problems;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
+using Problems;
 
 namespace Tests
 {
@@ -18,11 +18,11 @@ namespace Tests
 
         [Test]
         public void P01_RemoveDupes_HasDupes() =>
-            P01_RemoveDupes(new[] { 3, 4, 5, 6, 3, 3, 5, 6, 7 }, new[] { 3, 4, 5, 6, 7 });
+            P01_RemoveDupes(new [] { 3, 4, 5, 6, 3, 3, 5, 6, 7 }, new [] { 3, 4, 5, 6, 7 });
 
         [Test]
         public void P01_RemoveDupes_NoDupes() =>
-            P01_RemoveDupes(new[] { 3, 4, 5, 6, 7 }, new[] { 3, 4, 5, 6, 7 });
+            P01_RemoveDupes(new [] { 3, 4, 5, 6, 7 }, new [] { 3, 4, 5, 6, 7 });
 
         [TestCase(0)]
         [TestCase(1)]
@@ -50,11 +50,13 @@ namespace Tests
         public void P05_ListifyTest()
         {
             var input = 14325;
-            var expected = new[] { 5, 2, 3, 4, 1 };
+            var expected = new [] { 5, 2, 3, 4, 1 };
             Assert.That(P05_Listify(input), Is.EqualTo(expected));
         }
 
         [TestCase(617, 295, 617 + 295)]
+        [TestCase(999, 999, 999 + 999)]
+        [TestCase(951, 7632, 951 + 7632)]
         public void P05_SumList(int a, int b, int sum)
         {
             var aL = P05_Listify(a);
