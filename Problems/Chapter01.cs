@@ -1,4 +1,6 @@
-﻿namespace Problems
+﻿using System.Collections.Generic;
+
+namespace Problems
 {
     public static class Chapter01
     {
@@ -7,7 +9,15 @@
         /// </summary>
         public static bool P01_IsUnique(string input)
         {
-            return false;
+            var uniqueChars = new HashSet<char>();
+            // O(n) iteration.
+            foreach (var ch in input)
+            {
+                // O(1) lookup
+                if (uniqueChars.Contains(ch)) return false;
+                uniqueChars.Add(ch);
+            }
+            return true;
         }
     }
 }
