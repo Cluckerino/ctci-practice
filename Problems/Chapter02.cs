@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Problems
 {
@@ -52,7 +53,32 @@ namespace Problems
         /// </summary>
         public static LinkedList<int> P05_SumLists(LinkedList<int> a, LinkedList<int> b)
         {
-            return new LinkedList<int>(new[] { 0 });
+            var answer = new LinkedList<int>();
+            P05_RecursiveAddDigit(a.First, b.First, 0, answer);
+            return answer;
+        }
+
+        /// <summary>
+        /// Recursive function that adds the digits and populates the answer list.
+        /// </summary>
+        public static void P05_RecursiveAddDigit(LinkedListNode<int> a, LinkedListNode<int> b,
+            int carryOver, LinkedList<int> answer)
+        {
+            // If digit isn't available, use 0.
+            var aVal = a?.Value ?? 0;
+            var bVal = b?.Value ?? 0;
+            // Calculate the sum and store the carryover for next iteration.
+            var digitSum = aVal + bVal + carryOver;
+            var newCarryOver = Math.DivRem(digitSum, 10, out digitSum);
+            answer.AddLast(digitSum);
+
+            var aNext = a?.Next;
+            var bNext = b?.Next;
+            // Check if we ran out of digits to add.
+            if (aNext is null && bNext is null && newCarryOver == 0) return;
+
+            // Recursively add the next digit.
+            P05_RecursiveAddDigit(aNext, bNext, newCarryOver, answer);
         }
     }
 }
