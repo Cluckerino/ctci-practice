@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Problems;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests
 {
@@ -21,5 +22,15 @@ namespace Tests
         [Test]
         public void P01_RemoveDupes_NoDupes() =>
             P01_RemoveDupes(new[] { 3, 4, 5, 6, 7 }, new[] { 3, 4, 5, 6, 7 });
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(5)]
+        public void P02_KthToLast(int kth)
+        {
+            var input = new LinkedList<int>(Enumerable.Range(1, 10));
+            var expected = 10 - kth;
+            Assert.That(Chapter02.P02_KthToLast(input, kth), Is.EqualTo(expected));
+        }
     }
 }

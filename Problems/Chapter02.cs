@@ -22,5 +22,16 @@ namespace Problems
             }
             return input;
         }
+
+        /// <summary>
+        /// Find the Kth to last element.
+        /// </summary>
+        /// <param name="singlyInput">Treat this as a singly-linked list.</param>
+        /// <param name="kth">Kth element from the tail. Zero-based.</param>
+        /// <returns>The kth to last element.</returns>
+        public static int P02_KthToLast(LinkedList<int> singlyInput, int kth)
+        {
+            return 0;
+        }
     }
 }
