@@ -9,7 +9,18 @@ namespace Problems
         /// </summary>
         public static LinkedList<int> P01_RemoveDupes(LinkedList<int> input)
         {
-            return new LinkedList<int>(new[] { 0 });
+            var uniques = new HashSet<int>();
+            var currentNode = input.First;
+            while (currentNode != null)
+            {
+                var nextNode = currentNode.Next;
+                if (uniques.Contains(currentNode.Value))
+                    input.Remove(currentNode);
+                else
+                    uniques.Add(currentNode.Value);
+                currentNode = nextNode;
+            }
+            return input;
         }
     }
 }
