@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using Problems;
 
 namespace Tests
@@ -78,6 +80,23 @@ namespace Tests
                     Assert.That(queue.Dequeue(), Is.EqualTo(expected));
                 }
                 Assert.That(queue.IsEmpty(), Is.True);
+            });
+        }
+
+        [Test]
+        public void T05SortStack()
+        {
+            var inputs = new [] { 0, 18, 9, 24, 5, 5, 27, 13, 11, 1 };
+            var expecteds = inputs.OrderBy(i => i).ToArray();
+            var stack = new Stack<int>(inputs);
+
+            Chapter03.P05SortStack(stack);
+
+            Assert.That(stack.Count, Is.EqualTo(expecteds.Length));
+            Assert.Multiple(() =>
+            {
+                foreach (var expected in expecteds)
+                    Assert.That(stack.Pop(), Is.EqualTo(expected));
             });
         }
     }

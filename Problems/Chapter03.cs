@@ -6,6 +6,11 @@ namespace Problems
     public static class Chapter03
     {
         /// <summary>
+        /// Sort the contents of this stack. Only an additional stack is allowed.
+        /// </summary>
+        public static void P05SortStack(Stack<int> input) { }
+
+        /// <summary>
         /// Three stacks that share the same array.
         /// </summary>
         public class P01ThreeInOne<T>
