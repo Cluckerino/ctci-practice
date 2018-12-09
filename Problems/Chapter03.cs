@@ -8,7 +8,29 @@ namespace Problems
         /// <summary>
         /// Sort the contents of this stack. Only an additional stack is allowed.
         /// </summary>
-        public static void P05SortStack(Stack<int> input) { }
+        public static void P05SortStack(Stack<int> input)
+        {
+            // Temp stack will be inverted, with largest on top.
+            var tempStack = new Stack<int>();
+            // Do the sorting
+            while (input.TryPop(out var next))
+            {
+                // Push items from temp stack to main stack until next number is largest. Items
+                // pushed to main stack will be sorted with smallest number > next on top.
+                while (tempStack.TryPeek(out var temp) && temp > next)
+                {
+                    temp = tempStack.Pop();
+                    input.Push(temp);
+                }
+
+                // Now push next to temp stack. Let the loop take care of repopulating from main stack.
+                tempStack.Push(next);
+            }
+
+            // Move from temp stack back to main stack.
+            while (tempStack.TryPop(out var item))
+                input.Push(item);
+        }
 
         /// <summary>
         /// Three stacks that share the same array.
