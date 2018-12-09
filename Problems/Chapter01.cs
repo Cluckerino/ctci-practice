@@ -7,7 +7,7 @@ namespace Problems
         /// <summary>
         /// Test if a string has all unique characters.
         /// </summary>
-        public static bool P01_IsUnique(string input)
+        public static bool P01IsUnique(string input)
         {
             var uniqueChars = new HashSet<char>();
             // O(n) iteration.
@@ -23,14 +23,14 @@ namespace Problems
         /// <summary>
         /// Are the two inputs one deletion/addition/change away from each other?
         /// </summary>
-        public static bool P05_OneAway(string input1, string input2)
+        public static bool P05OneAway(string input1, string input2)
         {
             if (input1.Length == input2.Length)
-                return P05_OneAway_SingleReplace(input1, input2);
+                return P05OneAwaySingleReplace(input1, input2);
             else if (input1.Length == input2.Length + 1)
-                return P05_OneAway_SingleShift(input1, input2);
+                return P05OneAwaySingleShift(input1, input2);
             else if (input1.Length + 1 == input2.Length)
-                return P05_OneAway_SingleShift(input2, input1);
+                return P05OneAwaySingleShift(input2, input1);
 
             return false;
         }
@@ -38,7 +38,7 @@ namespace Problems
         /// <summary>
         /// Checks strings of equal length for a single change.
         /// </summary>
-        private static bool P05_OneAway_SingleReplace(string input1, string input2)
+        private static bool P05OneAwaySingleReplace(string input1, string input2)
         {
             var firstDiff = false;
             for (int i = 0; i < input1.Length; i++)
@@ -55,7 +55,7 @@ namespace Problems
         /// <summary>
         /// Checks if strings are different by a single insertion/deletion.
         /// </summary>
-        private static bool P05_OneAway_SingleShift(string longer, string shorter)
+        private static bool P05OneAwaySingleShift(string longer, string shorter)
         {
             int li = 0, si = 0;
             var firstDiff = false;

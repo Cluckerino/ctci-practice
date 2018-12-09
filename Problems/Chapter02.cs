@@ -8,7 +8,7 @@ namespace Problems
         /// <summary>
         /// Remove duplicates from the linked list.
         /// </summary>
-        public static LinkedList<int> P01_RemoveDupes(LinkedList<int> input)
+        public static LinkedList<int> P01RemoveDupes(LinkedList<int> input)
         {
             var uniques = new HashSet<int>();
             var currentNode = input.First;
@@ -30,7 +30,7 @@ namespace Problems
         /// <param name="singlyInput">Treat this as a singly-linked list.</param>
         /// <param name="kth">Kth element from the tail. Zero-based.</param>
         /// <returns>The kth to last element.</returns>
-        public static int P02_KthToLast(LinkedList<int> singlyInput, int kth)
+        public static int P02KthToLast(LinkedList<int> singlyInput, int kth)
         {
             var headNode = singlyInput.First;
             var kthNode = headNode;
@@ -49,19 +49,9 @@ namespace Problems
         }
 
         /// <summary>
-        /// Treat the list as digits and add them.
-        /// </summary>
-        public static LinkedList<int> P05_SumLists(LinkedList<int> a, LinkedList<int> b)
-        {
-            var answer = new LinkedList<int>();
-            P05_RecursiveAddDigit(a.First, b.First, 0, answer);
-            return answer;
-        }
-
-        /// <summary>
         /// Recursive function that adds the digits and populates the answer list.
         /// </summary>
-        public static void P05_RecursiveAddDigit(LinkedListNode<int> a, LinkedListNode<int> b,
+        public static void P05RecursiveAddDigit(LinkedListNode<int> a, LinkedListNode<int> b,
             int carryOver, LinkedList<int> answer)
         {
             // If digit isn't available, use 0.
@@ -78,7 +68,17 @@ namespace Problems
             if (aNext is null && bNext is null && newCarryOver == 0) return;
 
             // Recursively add the next digit.
-            P05_RecursiveAddDigit(aNext, bNext, newCarryOver, answer);
+            P05RecursiveAddDigit(aNext, bNext, newCarryOver, answer);
+        }
+
+        /// <summary>
+        /// Treat the list as digits and add them.
+        /// </summary>
+        public static LinkedList<int> P05SumLists(LinkedList<int> a, LinkedList<int> b)
+        {
+            var answer = new LinkedList<int>();
+            P05RecursiveAddDigit(a.First, b.First, 0, answer);
+            return answer;
         }
     }
 }
