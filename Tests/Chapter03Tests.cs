@@ -58,5 +58,22 @@ namespace Tests
                 Assert.That(actualPop3, Is.EqualTo(expectedPop3));
             });
         }
+
+        [Test]
+        public void T04QueueViaStacks()
+        {
+            int input1 = 1, input2 = 2;
+            int expected1 = 1, expected2 = 2;
+            var queue = new Chapter03.P04QueueViaStacks<int>();
+
+            queue.Enqueue(input1);
+            queue.Enqueue(input2);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue.Dequeue(), Is.EqualTo(expected1));
+                Assert.That(queue.Dequeue(), Is.EqualTo(expected2));
+            });
+        }
     }
 }

@@ -240,5 +240,27 @@ namespace Problems
                 return index;
             }
         }
+
+        /// <summary>
+        /// Implement a Queue using two Stacks.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public class P04QueueViaStacks<T>
+        {
+            /// <summary>
+            /// Removes an item from the queue.
+            /// </summary>
+            public T Dequeue()
+            {
+                return default(T);
+            }
+
+            /// <summary>
+            /// Adds an item to the Queue.
+            /// </summary>
+            /// <param name="item"></param>
+            public void Enqueue(T item)
+            { }
+        }
     }
 }
