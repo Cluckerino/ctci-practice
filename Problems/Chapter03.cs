@@ -247,12 +247,15 @@ namespace Problems
         /// <typeparam name="T"></typeparam>
         public class P04QueueViaStacks<T>
         {
+            // Top of storage stack should be the first item in.
+            private Stack<T> storageStack = new Stack<T>();
+
             /// <summary>
-            /// Removes an item from the queue.
+            /// Removes an item from the Queue.
             /// </summary>
             public T Dequeue()
             {
-                return default(T);
+                return storageStack.Pop();
             }
 
             /// <summary>
@@ -260,7 +263,34 @@ namespace Problems
             /// </summary>
             /// <param name="item"></param>
             public void Enqueue(T item)
-            { }
+            {
+                // Top of temp stack should be the last item in.
+                var tempStack = new Stack<T>(storageStack.Count + 1);
+
+                while (storageStack.TryPop(out var oldItem))
+                    tempStack.Push(oldItem);
+
+                storageStack.Push(item);
+
+                while (tempStack.TryPop(out var oldItem))
+                    storageStack.Push(oldItem);
+            }
+
+            /// <summary>
+            /// Check if the Queue is empty.
+            /// </summary>
+            public bool IsEmpty()
+            {
+                return storageStack.Count == 0;
+            }
+
+            /// <summary>
+            /// Look at the top of the Queue (i.e. the first item to be removed).
+            /// </summary>
+            public T Peek()
+            {
+                return storageStack.Peek();
+            }
         }
     }
 }

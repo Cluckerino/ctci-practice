@@ -62,17 +62,22 @@ namespace Tests
         [Test]
         public void T04QueueViaStacks()
         {
-            int input1 = 1, input2 = 2;
-            int expected1 = 1, expected2 = 2;
+            var inputs = new [] { 1, 2, 3, 4, 5 };
+
             var queue = new Chapter03.P04QueueViaStacks<int>();
 
-            queue.Enqueue(input1);
-            queue.Enqueue(input2);
+            foreach (var input in inputs)
+                queue.Enqueue(input);
 
             Assert.Multiple(() =>
             {
-                Assert.That(queue.Dequeue(), Is.EqualTo(expected1));
-                Assert.That(queue.Dequeue(), Is.EqualTo(expected2));
+                foreach (var expected in inputs)
+                {
+                    Assert.That(queue.IsEmpty(), Is.False);
+                    Assert.That(queue.Peek(), Is.EqualTo(expected));
+                    Assert.That(queue.Dequeue(), Is.EqualTo(expected));
+                }
+                Assert.That(queue.IsEmpty(), Is.True);
             });
         }
     }
