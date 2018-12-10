@@ -22,7 +22,11 @@ namespace Tests
             //! 4       1111, 112, 121, 13, 211, 22, 31
             //! 5       11111, 1112, 1121. 113, 1211, 122, 131, 2111, 212, 221, 23, 311, 32
 
-            Assert.That(Chapter08.P01TripleStep(input), Is.EqualTo(expected));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Chapter08.P01TripleStep(input), Is.EqualTo(expected));
+                Assert.That(Chapter08.P01Recursive(input), Is.EqualTo(expected));
+            });
         }
     }
 }
