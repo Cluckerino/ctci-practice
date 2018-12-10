@@ -47,11 +47,14 @@ namespace Tests
         [Test]
         public void T04CheckBalanced()
         {
+            // Both should have height 2
             Assert.That(Problems.Chapter04.P04CheckBalanced(testTree), Is.True);
 
+            // lHeight = 3, rHeight = 2, balanced.
             testTree.GetLeftmost().LVal = 1;
             Assert.That(Problems.Chapter04.P04CheckBalanced(testTree), Is.True);
 
+            // lHeight = 4, rHeight = 2, not balanced.
             testTree.GetLeftmost().LVal = 0;
             Assert.That(Problems.Chapter04.P04CheckBalanced(testTree), Is.False);
         }

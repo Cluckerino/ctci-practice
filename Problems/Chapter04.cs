@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace Problems
@@ -9,7 +10,34 @@ namespace Problems
         /// </summary>
         public static bool P04CheckBalanced<T>(BinaryTreeNode<T> head)
         {
-            return false;
+            if (head.L is null && head.R is null) return true;
+            var lHeight = head.L is null ?
+                0 :
+                P04RecursiveGetHeight(head.L, 1);
+
+            var rHeight = head.R is null ?
+                0 :
+                P04RecursiveGetHeight(head.R, 1);
+
+            Console.WriteLine($"Heights - L: {lHeight}, R: {rHeight}");
+            return Math.Abs(lHeight - rHeight) <= 1;
+        }
+
+        /// <summary>
+        /// Recursively drills down the nodes, incrementing height and finding the max.
+        /// </summary>
+        public static int P04RecursiveGetHeight<T>(BinaryTreeNode<T> currentNode, int currentHeight)
+        {
+            if (currentNode.L is null && currentNode.R is null)
+                return currentHeight;
+
+            var lHeight = currentNode.L is null ?
+                currentHeight :
+                P04RecursiveGetHeight(currentNode.L, currentHeight + 1);
+            var rHeight = currentNode.R is null ?
+                currentHeight :
+                P04RecursiveGetHeight(currentNode.R, currentHeight + 1);
+            return Math.Max(lHeight, rHeight);
         }
     }
 
