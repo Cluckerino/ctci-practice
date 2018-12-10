@@ -1,8 +1,10 @@
-using System;
 using System.Text;
 
 namespace Problems
 {
+    public static class Chapter04
+    { }
+
     /// <summary>
     /// Simple binary tree node implementation.
     /// </summary>
@@ -32,7 +34,7 @@ namespace Problems
         /// </summary>
         public T LVal
         {
-            get => L is null? default(T) : L.Value;
+            get => L is null ? default(T) : L.Value;
             set
             {
                 if (L is null) AddL(value);
@@ -50,7 +52,7 @@ namespace Problems
         /// </summary>
         public T RVal
         {
-            get => R is null? default(T) : R.Value;
+            get => R is null ? default(T) : R.Value;
             set
             {
                 if (R is null) AddR(value);
@@ -86,6 +88,28 @@ namespace Problems
         }
 
         /// <summary>
+        /// Gets the leftmost node from the tree.
+        /// </summary>
+        public BinaryTreeNode<T> GetLeftmost()
+        {
+            var leftmost = this;
+            while (!(leftmost.L is null))
+                leftmost = leftmost.L;
+            return leftmost;
+        }
+
+        /// <summary>
+        /// Gets the rightmost node from the tree.
+        /// </summary>
+        public BinaryTreeNode<T> GetRightmost()
+        {
+            var rightmost = this;
+            while (!(rightmost.R is null))
+                rightmost = rightmost.R;
+            return rightmost;
+        }
+
+        /// <summary>
         /// Create a string with this node as the base.
         /// </summary>
         public override string ToString()
@@ -118,5 +142,4 @@ namespace Problems
             AppendNodeString(node.R, sb, indentCount + 1, "R: ");
         }
     }
-    public static class Chapter04 { }
 }
