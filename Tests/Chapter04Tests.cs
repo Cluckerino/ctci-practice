@@ -1,42 +1,47 @@
-using NUnit.Framework;
-using Problems;
-using IntNode = Problems.BinaryTreeNode<int>;
 using System;
+using NUnit.Framework;
+using IntNode = Problems.BinaryTreeNode<int>;
 
-[TestFixture]
-public class Chapter04Tests
+namespace Tests
 {
-    IntNode exTreeHead;
-
-    /// <summary>
-    /// Create example tree to test stuff.
-    /// </summary>
-    [SetUp]
-    public void CreateExampleTree()
+    [TestFixture]
+    public class Chapter04Tests
     {
-        exTreeHead = new IntNode(8);
-        exTreeHead.LVal = 4;
-        exTreeHead.L.LVal = 2;
-        exTreeHead.L.RVal = 6;
-        exTreeHead.RVal = 10;
-        exTreeHead.R.RVal = 20;
-    }
+        private IntNode testTree;
 
-    [Test]
-    public void BinaryTreeTest()
-    {
-        var leftmost = exTreeHead;
-        while (!(leftmost.L is null))
-            leftmost = leftmost.L;
+        [Test]
+        public void BinaryTreeTest()
+        {
+            Console.WriteLine("Tree structure:");
+            Console.WriteLine(testTree);
 
-        var rightmost = exTreeHead;
-        while (!(rightmost.R is null))
-            rightmost = rightmost.R;
+            Assert.That(testTree.GetLeftmost().Value, Is.EqualTo(2));
+            Assert.That(testTree.GetRightmost().Value, Is.EqualTo(20));
+        }
 
-        Console.WriteLine("Tree structure:");
-        Console.WriteLine(exTreeHead);
+        /// <summary>
+        /// Create example tree to test stuff.
+        /// </summary>
+        public IntNode CreateExampleTree()
+        {
+            var exTree = new IntNode(8)
+            {
+                LVal = 4,
+                RVal = 10
+            };
+            exTree.L.LVal = 2;
+            exTree.L.RVal = 6;
+            exTree.R.RVal = 20;
+            return exTree;
+        }
 
-        Assert.That(leftmost.Value, Is.EqualTo(2));
-        Assert.That(rightmost.Value, Is.EqualTo(20));
+        /// <summary>
+        /// Create the test fixture example tree.
+        /// </summary>
+        [SetUp]
+        public void SetupExampleTree()
+        {
+            testTree = CreateExampleTree();
+        }
     }
 }
