@@ -88,5 +88,25 @@ namespace Tests
             Assert.That(actual[4], Is.EqualTo('d'));
             Assert.That(actual[5], Is.EqualTo('c'));
         }
+
+        [Test]
+        public void T07BuildOrderCircularDependencies()
+        {
+            var projects = new [] { 'a', 'b', 'c', 'd', 'e', 'f' };
+            var dependencies = new []
+            {
+                Tuple.Create('a', 'd'),
+                Tuple.Create('f', 'b'),
+                Tuple.Create('b', 'd'),
+                Tuple.Create('f', 'a'),
+                Tuple.Create('d', 'c'),
+                Tuple.Create('c', 'b'),
+            };
+
+            // Circular dependency -> d req b, b req c, c req d.
+
+            Assert.That(() => Chapter04.P07BuildOrder(projects, dependencies),
+                Throws.Exception.TypeOf<InvalidOperationException>());
+        }
     }
 }
