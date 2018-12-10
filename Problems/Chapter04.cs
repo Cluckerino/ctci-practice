@@ -3,7 +3,15 @@ using System.Text;
 namespace Problems
 {
     public static class Chapter04
-    { }
+    {
+        /// <summary>
+        /// Check if this tree is balanced (i.e. heightL and heightR within 1).
+        /// </summary>
+        public static bool P04CheckBalanced<T>(BinaryTreeNode<T> head)
+        {
+            return false;
+        }
+    }
 
     /// <summary>
     /// Simple binary tree node implementation.

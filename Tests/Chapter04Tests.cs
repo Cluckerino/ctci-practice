@@ -43,5 +43,17 @@ namespace Tests
         {
             testTree = CreateExampleTree();
         }
+
+        [Test]
+        public void T04CheckBalanced()
+        {
+            Assert.That(Problems.Chapter04.P04CheckBalanced(testTree), Is.True);
+
+            testTree.GetLeftmost().LVal = 1;
+            Assert.That(Problems.Chapter04.P04CheckBalanced(testTree), Is.True);
+
+            testTree.GetLeftmost().LVal = 0;
+            Assert.That(Problems.Chapter04.P04CheckBalanced(testTree), Is.False);
+        }
     }
 }
