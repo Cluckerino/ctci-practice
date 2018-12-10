@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Problems
@@ -38,6 +40,14 @@ namespace Problems
                 currentHeight :
                 P04RecursiveGetHeight(currentNode.R, currentHeight + 1);
             return Math.Max(lHeight, rHeight);
+        }
+
+        /// <summary>
+        /// Find a build order that will work for this graph. In tuple, Item2 is dependent on Item1.
+        /// </summary>
+        public static List<char> P07BuildOrder(char[] projects, Tuple<char, char>[] dependencies)
+        {
+            return Enumerable.Empty<char>().ToList();
         }
     }
 
