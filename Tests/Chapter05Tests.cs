@@ -19,5 +19,17 @@ namespace Tests
 
             Assert.That(actual, Is.EqualTo(expected));
         }
+
+        [TestCase(2, 6, 0b0001111100)]
+        [TestCase(2, 9, 0b1111111100)]
+        [TestCase(0, 6, 0b0001111111)]
+        public void T01Mask(int i, int j, int expected)
+        {
+            int actual = Chapter05.P01Mask(i, j);
+
+            Console.WriteLine(actual.AsBinary());
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }
