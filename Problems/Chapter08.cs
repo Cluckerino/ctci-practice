@@ -8,7 +8,27 @@
         /// </summary>
         public static int P01TripleStep(int numSteps)
         {
-            return P01Recursive(numSteps);
+            // Iterative solution here.
+
+            // Sum of ways = ways after taking 1 step + ways after taking 2 steps + ways after
+            // taking 3 steps. Essentially, S(N) = S(N-1) + S(N-2) + S(N-3), and the problem is a
+            // tribonnaci sequence.
+
+            // To initalize the sequence, define: S(0) = 1; S(N) = 0 if N < 0
+            var n1 = 1;
+            var n2 = 0;
+            var n3 = 0;
+            var currentSum = 0;
+
+            for (var i = 1; i <= numSteps; i++)
+            {
+                currentSum = n1 + n2 + n3;
+                n3 = n2;
+                n2 = n1;
+                n1 = currentSum;
+            }
+
+            return currentSum;
         }
 
         /// <summary>
