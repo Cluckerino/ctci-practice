@@ -64,7 +64,7 @@ namespace Problems
         public static bool P03RotatedArray(int[] array, int value, out int indexOut)
         {
             indexOut = 0;
-            return false;
+            return P03RotatedArray(array, value, 0, array.Length - 1, ref indexOut);
         }
 
         /// <summary>
@@ -89,6 +89,49 @@ namespace Problems
                 indexOut = mid;
                 return true;
             }
+        }
+
+        /// <summary>
+        /// The recursive call.
+        /// </summary>
+        private static bool P03RotatedArray(int[] array, int value, int left, int right, ref int indexOut)
+        {
+            if (left > right) return false;
+
+            var mid = (left + right) / 2;
+            var mVal = array[mid];
+
+            // Got em
+            if (mVal == value)
+            {
+                indexOut = mid;
+                return true;
+            }
+
+            // Don't got em, keep searching.
+            var lVal = array[left];
+            var rVal = array[right];
+
+            // If right <= mid, pivot point might be on the right, so search anyway. Otherwise, right
+            // is sorted, so just use regular binary search logic and check if the value could be
+            // there.
+            var searchRight = rVal <= mVal || mVal < value;
+            // Same logic for the left.
+            var searchLeft = lVal >= mVal || mVal > value;
+
+            if (searchRight)
+            {
+                var foundRight = P03RotatedArray(array, value, mid + 1, right, ref indexOut);
+                // We found it alredy
+                if (foundRight) return true;
+            }
+
+            if (searchLeft)
+            {
+                return P03RotatedArray(array, value, left, mid - 1, ref indexOut);
+            }
+
+            return false;
         }
 
         /// <summary>
