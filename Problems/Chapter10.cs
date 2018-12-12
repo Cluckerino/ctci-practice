@@ -7,6 +7,16 @@ namespace Problems
     public static class Chapter10
     {
         /// <summary>
+        /// Does a binary search to find x in the given sorted array. Returns true and sets the param
+        /// if found.
+        /// </summary>
+        public static bool P00RecursiveBinarySearch(int[] array, int value, out int indexOut)
+        {
+            indexOut = 0;
+            return P00RecursiveBinarySearch(array, value, 0, array.Length - 1, ref indexOut);
+        }
+
+        /// <summary>
         /// Assuming that a and be are sorted an a has enough buffer at the end to hold b, merge the
         /// two in sorted order.
         /// </summary>
@@ -48,14 +58,9 @@ namespace Problems
         }
 
         /// <summary>
-        /// Does a binary search to find x in the given sorted array. Returns true and sets the param
-        /// if found.
+        /// Creates a string from the given sequence.
         /// </summary>
-        public static bool P00RecursiveBinarySearch(int[] array, int value, out int indexOut)
-        {
-            indexOut = 0;
-            return P00RecursiveBinarySearch(array, value, 0, array.Length - 1, ref indexOut);
-        }
+        public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";
 
         /// <summary>
         /// The recursive call.
@@ -75,11 +80,6 @@ namespace Problems
                 return true;
             }
         }
-
-        /// <summary>
-        /// Creates a string from the given sequence.
-        /// </summary>
-        public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";
 
         /// <summary>
         /// Attempt to implement a quicksort algo.
