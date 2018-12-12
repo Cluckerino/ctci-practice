@@ -81,18 +81,22 @@ namespace Tests
         {
             const int min = 0;
             const int max = 35;
+            const int elementMin = 2;
             const int elementMax = 10;
             var lowerSectionBound = rng.Next(min + 3, max - 3);
             var upperSectionBound = rng.Next(lowerSectionBound + 1, max);
-            var lowerList = DrawRandom(rng.Next(2, elementMax), min, lowerSectionBound);
-            var upperList = DrawRandom(rng.Next(2, elementMax), upperSectionBound, max);
+            nonMember = rng.Next(lowerSectionBound, upperSectionBound);
+
+            var lowerList = DrawRandom(rng.Next(elementMin, elementMax),
+                min, nonMember);
+            var upperList = DrawRandom(rng.Next(elementMin, elementMax),
+                nonMember + 1, max);
 
             var fullArray = lowerList
                 .Concat(upperList)
                 .OrderBy(i => i)
                 .ToArray();
 
-            nonMember = rng.Next(lowerSectionBound, upperSectionBound);
             member = fullArray[rng.Next(fullArray.Length)];
 
             return fullArray;
