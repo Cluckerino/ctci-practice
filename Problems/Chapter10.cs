@@ -7,7 +7,8 @@ namespace Problems
     public static class Chapter10
     {
         /// <summary>
-        /// Assuming that a and be are sorted an a has enough buffer at the end to hold b, merge the two in sorted order.`
+        /// Assuming that a and be are sorted an a has enough buffer at the end to hold b, merge the
+        /// two in sorted order.
         /// </summary>
         public static int[] P01SortedMerge(int[] a, int aOrigLength, int[] b)
         {
@@ -32,7 +33,6 @@ namespace Problems
                     // Set next value
                     if (!bDone)
                         bVal = b[bInd];
-
                 }
                 else
                 {
@@ -45,6 +45,35 @@ namespace Problems
                 }
             }
             return a;
+        }
+
+        /// <summary>
+        /// Does a binary search to find x in the given sorted array. Returns true and sets the param
+        /// if found.
+        /// </summary>
+        public static bool P00RecursiveBinarySearch(int[] array, int value, out int indexOut)
+        {
+            indexOut = 0;
+            return P00RecursiveBinarySearch(array, value, 0, array.Length - 1, ref indexOut);
+        }
+
+        /// <summary>
+        /// The recursive call.
+        /// </summary>
+        private static bool P00RecursiveBinarySearch(int[] array, int value, int left, int right, ref int indexOut)
+        {
+            if (left > right) return false;
+
+            var mid = (left + right) / 2;
+            if (array[mid] < value)
+                return P00RecursiveBinarySearch(array, value, mid + 1, right, ref indexOut);
+            else if (array[mid] > value)
+                return P00RecursiveBinarySearch(array, value, left, mid - 1, ref indexOut);
+            else
+            {
+                indexOut = mid;
+                return true;
+            }
         }
 
         /// <summary>

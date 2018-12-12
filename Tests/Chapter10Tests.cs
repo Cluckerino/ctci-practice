@@ -28,7 +28,6 @@ namespace Tests
             var expected = input.ToList();
             var actual = Chapter10.P00QuickSort<int>.CreateCopy(input);
             Assert.That(actual, Is.EqualTo(expected));
-
         }
 
         [Test]
@@ -38,6 +37,24 @@ namespace Tests
             var expected = input.OrderBy(i => i).ToList();
             var actual = Chapter10.P00QuickSort<int>.Sort(input);
             Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void T00RecursiveBinarySearch()
+        {
+            var array = CreateSearchable(out var member, out var nonMember);
+            Console.WriteLine($"Finding member {member} and non-member {nonMember} in:");
+            Console.WriteLine(array.Stringify());
+
+            Assume.That(array, Has.Member(member));
+            Assume.That(array, Does.Not.Contain(nonMember));
+
+            var actual = Chapter10.P00RecursiveBinarySearch(array, member, out var index);
+            Assert.That(actual, Is.True);
+            Assert.That(array[index], Is.EqualTo(member));
+
+            actual = Chapter10.P00RecursiveBinarySearch(array, nonMember, out index);
+            Assert.That(actual, Is.False);
         }
 
         [Test]
@@ -58,6 +75,27 @@ namespace Tests
             Console.WriteLine("Result:");
             Console.WriteLine(actual.Stringify());
             Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        private int[] CreateSearchable(out int member, out int nonMember)
+        {
+            const int min = 0;
+            const int max = 35;
+            const int elementMax = 10;
+            var lowerSectionBound = rng.Next(min + 3, max - 3);
+            var upperSectionBound = rng.Next(lowerSectionBound + 1, max);
+            var lowerList = DrawRandom(rng.Next(2, elementMax), min, lowerSectionBound);
+            var upperList = DrawRandom(rng.Next(2, elementMax), upperSectionBound, max);
+
+            var fullArray = lowerList
+                .Concat(upperList)
+                .OrderBy(i => i)
+                .ToArray();
+
+            nonMember = rng.Next(lowerSectionBound, upperSectionBound);
+            member = fullArray[rng.Next(fullArray.Length)];
+
+            return fullArray;
         }
     }
 }
