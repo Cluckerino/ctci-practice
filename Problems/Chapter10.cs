@@ -11,7 +11,40 @@ namespace Problems
         /// </summary>
         public static int[] P01SortedMerge(int[] a, int aOrigLength, int[] b)
         {
-            return null;
+            // Do a reverse zig-zag search. Zig-zag touches each element at most twice
+            var aInd = aOrigLength - 1;
+            var bInd = b.Length - 1;
+            var lastInd = aOrigLength + b.Length - 1;
+            var aDone = false;
+            var bDone = false;
+            var aVal = a[aInd];
+            var bVal = b[bInd];
+            for (var i = lastInd; i >= 0; i--)
+            {
+                if (aDone && bDone) throw new InvalidOperationException("How'd we get here????");
+
+                if (aDone || (!bDone && bVal > aVal))
+                {
+                    a[i] = bVal;
+                    bInd--;
+                    // Decrementing past 0 = done.
+                    bDone = bInd < 0;
+                    // Set next value
+                    if (!bDone)
+                        bVal = b[bInd];
+
+                }
+                else
+                {
+                    a[i] = aVal;
+                    aInd--;
+                    // Decrementing past 0 = done.
+                    aDone = aInd < 0;
+                    if (!aDone)
+                        aVal = a[aInd];
+                }
+            }
+            return a;
         }
 
         /// <summary>

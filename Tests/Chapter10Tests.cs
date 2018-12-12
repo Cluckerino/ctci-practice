@@ -43,8 +43,8 @@ namespace Tests
         [Test]
         public void T01SortedMerge()
         {
-            var aOrig = DrawRandom().OrderBy(i => i).ToList();
-            var b = DrawRandom().OrderBy(i => i).ToArray();
+            var aOrig = DrawRandom(5, -5, 10).OrderBy(i => i).ToList();
+            var b = DrawRandom(15, 0, 15).OrderBy(i => i).ToArray();
             var expected = aOrig.Concat(b).OrderBy(i => i).ToList();
             Console.WriteLine("Merging the following:");
             Console.WriteLine($" a = {aOrig.Stringify()}");
