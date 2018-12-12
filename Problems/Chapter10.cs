@@ -58,6 +58,16 @@ namespace Problems
         }
 
         /// <summary>
+        /// Fint the index given number in the sorted input array, given that the array has been
+        /// rotated an unknown number of times.
+        /// </summary>
+        public static bool P03RotatedArray(int[] array, int value, out int indexOut)
+        {
+            indexOut = 0;
+            return false;
+        }
+
+        /// <summary>
         /// Creates a string from the given sequence.
         /// </summary>
         public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";

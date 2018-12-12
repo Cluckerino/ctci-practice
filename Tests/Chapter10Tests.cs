@@ -77,6 +77,32 @@ namespace Tests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
+        [Test]
+        public void T03RotatedArray()
+        {
+            var array = CreateSearchable(out var member, out var nonMember);
+            var quarter = array.Length / 4;
+            var half = array.Length / 2;
+            var pivot = rng.Next(half - quarter, half + quarter);
+            array = Enumerable.Range(pivot, array.Length - pivot)
+                .Concat(Enumerable.Range(0, pivot))
+                .Select(i => array[i])
+                .ToArray();
+
+            Console.WriteLine($"Finding member {member} and non-member {nonMember} in:");
+            Console.WriteLine(array.Stringify());
+
+            Assume.That(array, Has.Member(member));
+            Assume.That(array, Does.Not.Contain(nonMember));
+
+            var actual = Chapter10.P03RotatedArray(array, member, out var index);
+            Assert.That(actual, Is.True);
+            Assert.That(array[index], Is.EqualTo(member));
+
+            actual = Chapter10.P03RotatedArray(array, nonMember, out index);
+            Assert.That(actual, Is.False);
+        }
+
         private int[] CreateSearchable(out int member, out int nonMember)
         {
             const int min = 0;
