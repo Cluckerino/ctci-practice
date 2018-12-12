@@ -7,6 +7,14 @@ namespace Problems
     public static class Chapter10
     {
         /// <summary>
+        /// Assuming that a and be are sorted an a has enough buffer at the end to hold b, merge the two in sorted order.`
+        /// </summary>
+        public static int[] P01SortedMerge(int[] a, int aOrigLength, int[] b)
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Creates a string from the given sequence.
         /// </summary>
         public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";

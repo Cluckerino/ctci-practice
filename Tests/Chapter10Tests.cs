@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using Problems;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
+using Problems;
 
 namespace Tests
 {
@@ -37,6 +37,26 @@ namespace Tests
             var input = DrawRandom();
             var expected = input.OrderBy(i => i).ToList();
             var actual = Chapter10.P00QuickSort<int>.Sort(input);
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void T01SortedMerge()
+        {
+            var aOrig = DrawRandom().OrderBy(i => i).ToList();
+            var b = DrawRandom().OrderBy(i => i).ToArray();
+            var expected = aOrig.Concat(b).OrderBy(i => i).ToList();
+            Console.WriteLine("Merging the following:");
+            Console.WriteLine($" a = {aOrig.Stringify()}");
+            Console.WriteLine($" b = {b.Stringify()}");
+            var a = aOrig
+                .Concat(Enumerable.Repeat(default(int), b.Length))
+                .ToArray();
+
+            var actual = Chapter10.P01SortedMerge(a, aOrig.Count, b);
+
+            Console.WriteLine("Result:");
+            Console.WriteLine(actual.Stringify());
             Assert.That(actual, Is.EqualTo(expected));
         }
     }
