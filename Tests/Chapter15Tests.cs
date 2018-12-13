@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Problems;
-using System.Linq;
 
 namespace Tests
 {
@@ -19,6 +19,7 @@ namespace Tests
                 .Select(d => d.TryToEat())
                 .AsSequential()
                 .ToList();
+
             Assert.That(results.Count, Is.EqualTo(table.Dudes.Count));
             Assert.That(results, Is.All.True);
         }

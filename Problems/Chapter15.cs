@@ -82,39 +82,25 @@ namespace Problems
             private void Eat()
             {
                 Console.WriteLine($"{this} started eating.");
-                lock (GetLeftStick())
-                {
-                    Thread.Sleep(TimeToWait);
+                var leftStick = table.GetChopstick(id);
+                var rightStick = table.GetChopstick(id + 1);
 
-                    lock (GetRightStick())
-                    {
-                        Console.WriteLine($"{this} is eating.");
-                        Thread.Sleep(TimeToWait);
-                    }
-                }
-                Console.WriteLine($"{this} finished eating.");
-            }
-
-            /// <summary>
-            /// Get the left stick.
-            /// </summary>
-            private P03Chopstick GetLeftStick()
-            {
                 Console.WriteLine($"{this} wants left chopstick.");
-                var stick = table.GetChopstick(id);
-                Console.WriteLine($"{this} got {stick}!");
-                return stick;
-            }
+                while (!Monitor.TryEnter(leftStick))
+                    Thread.Sleep(TimeToWait);
+                Console.WriteLine($"{this} got left chopstick {leftStick}!");
 
-            /// <summary>
-            /// Get the right stick.
-            /// </summary>
-            private P03Chopstick GetRightStick()
-            {
                 Console.WriteLine($"{this} wants right chopstick.");
-                var stick = table.GetChopstick(id + 1);
-                Console.WriteLine($"{this} got {stick}!");
-                return stick;
+                while (!Monitor.TryEnter(rightStick))
+                    Thread.Sleep(TimeToWait);
+                Console.WriteLine($"{this} got right chopstick {leftStick}!");
+
+                Console.WriteLine($"{this} is eating.");
+                Thread.Sleep(TimeToWait);
+
+                Monitor.Exit(leftStick);
+                Monitor.Exit(rightStick);
+                Console.WriteLine($"{this} finished eating.");
             }
         }
 
@@ -146,7 +132,7 @@ namespace Problems
             /// <summary>
             /// Get a chopstick using the given index. Same num is left, +1 (ring array) is right.
             /// </summary>
-            public P03Chopstick GetChopstick(int num) => 
+            public P03Chopstick GetChopstick(int num) =>
                 Sticks[(Sticks.Count + num) % Sticks.Count];
 
             /// <summary>
