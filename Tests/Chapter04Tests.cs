@@ -10,27 +10,49 @@ namespace Tests
     [TestFixture]
     public class Chapter04Tests
     {
+        private SetGraph<int> testGraph;
         private IntNode testTree;
 
-        /// <summary>
-        /// Create the test fixture example tree.
-        /// </summary>
-        [SetUp]
-        public void SetupExampleTree()
-        {
-            testTree = CommonTests.CreateExampleTree();
-        }
-
-        [Test]
-        public void T00DepthFirst()
+        public static SetGraph<int> CreateExampleGraph()
         {
             var graph = new SetGraph<int>();
             graph.SetChildren(0, 1, 4, 5);
             graph.SetChildren(1, 3, 4);
             graph.SetChildren(2, 1);
             graph.SetChildren(3, 2, 4);
+            return graph;
+        }
 
-            var actualNodes = Chapter04.P00DepthFirst(graph, 0);
+        /// <summary>
+        /// Create the test fixture example tree.
+        /// </summary>
+        [SetUp]
+        public void SetupTestGraphs()
+        {
+            testTree = CommonTests.CreateExampleTree();
+            testGraph = CreateExampleGraph();
+        }
+
+        [Test]
+        public void T00BreadthFirst()
+        {
+            var actualNodes = Chapter04.P00BreadthFirst(testGraph, 0);
+            var actual = actualNodes
+                .Select(n => n.Value)
+                .ToList();
+
+            Console.WriteLine(actual.Stringify());
+
+            // First item had better be 0.
+            Assert.That(actual[0], Is.EqualTo(0));
+            // Contents should be the same.
+            Assert.That(actualNodes, Is.EquivalentTo(testGraph.Nodes));
+        }
+
+        [Test]
+        public void T00DepthFirst()
+        {
+            var actualNodes = Chapter04.P00DepthFirst(testGraph, 0);
 
             var actual = actualNodes
                 .Select(n => n.Value)
@@ -39,7 +61,13 @@ namespace Tests
             var index0 = actual.FindIndex(v => v == 0);
             var index3 = actual.FindIndex(v => v == 3);
 
-            Assert.That(actualNodes, Is.EquivalentTo(graph.Nodes));
+            Console.WriteLine(actual.Stringify());
+
+            // First item had better be 0.
+            Assert.That(actual[0], Is.EqualTo(0));
+            // Contents should be the same.
+            Assert.That(actualNodes, Is.EquivalentTo(testGraph.Nodes));
+            // In the DFS, 0 should drill down to 3.
             Assert.That(index0, Is.LessThan(index3));
         }
 
