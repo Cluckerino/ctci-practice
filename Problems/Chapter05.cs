@@ -1,14 +1,7 @@
-﻿using System;
-
-namespace Problems
+﻿namespace Problems
 {
     public static class Chapter05
     {
-        /// <summary>
-        /// Create a binary string of this number.
-        /// </summary>
-        public static string AsBinary(this int num) => Convert.ToString(num, 2);
-
         /// <summary>
         /// Insert m into n at bits i-j inclusive.
         /// </summary>
