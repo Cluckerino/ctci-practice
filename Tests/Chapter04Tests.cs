@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Common;
 using NUnit.Framework;
 using Problems;
 using IntNode = Common.BinaryTreeNode<int>;
@@ -18,6 +19,28 @@ namespace Tests
         public void SetupExampleTree()
         {
             testTree = CommonTests.CreateExampleTree();
+        }
+
+        [Test]
+        public void T00DepthFirst()
+        {
+            var graph = new SetGraph<int>();
+            graph.SetChildren(0, 1, 4, 5);
+            graph.SetChildren(1, 3, 4);
+            graph.SetChildren(2, 1);
+            graph.SetChildren(3, 2, 4);
+
+            var actualNodes = Chapter04.P00DepthFirst(graph, 0);
+
+            var actual = actualNodes
+                .Select(n => n.Value)
+                .ToList();
+
+            var index0 = actual.FindIndex(v => v == 0);
+            var index3 = actual.FindIndex(v => v == 3);
+
+            Assert.That(actualNodes, Is.EquivalentTo(graph.Nodes));
+            Assert.That(index0, Is.LessThan(index3));
         }
 
         [Test]

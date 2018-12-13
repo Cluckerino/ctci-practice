@@ -8,6 +8,14 @@ namespace Problems
     public static class Chapter04
     {
         /// <summary>
+        /// Do a DFS starting from the given node. Return the order of the search as a queue.
+        /// </summary>
+        public static Queue<GraphNode<int>> P00DepthFirst(SetGraph<int> graph, int initialNode)
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Check if this tree is balanced (i.e. heightL and heightR within 1).
         /// </summary>
         public static bool P04CheckBalanced<T>(BinaryTreeNode<T> head)
