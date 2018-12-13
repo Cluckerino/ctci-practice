@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 
 namespace Problems
 {
@@ -66,11 +67,6 @@ namespace Problems
             indexOut = 0;
             return P03RotatedArray(array, value, 0, array.Length - 1, ref indexOut);
         }
-
-        /// <summary>
-        /// Creates a string from the given sequence.
-        /// </summary>
-        public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";
 
         /// <summary>
         /// The recursive call.

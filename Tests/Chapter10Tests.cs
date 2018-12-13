@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
+using Common;
 using NUnit.Framework;
 using Problems;
 
@@ -11,20 +11,10 @@ namespace Tests
     {
         private static Random rng = new Random();
 
-        /// <summary>
-        /// Create an array of random numbers.
-        /// </summary>
-        public static List<int> DrawRandom(int count = 10, int min = 0, int max = 20)
-        {
-            return Enumerable.Repeat(0, count)
-                .Select(_ => rng.Next(min, max))
-                .ToList();
-        }
-
         [Test]
         public void T00CreateCopy()
         {
-            var input = DrawRandom();
+            var input = Utilities.DrawRandom();
             var expected = input.ToList();
             var actual = Chapter10.P00QuickSort<int>.CreateCopy(input);
             Assert.That(actual, Is.EqualTo(expected));
@@ -33,7 +23,7 @@ namespace Tests
         [Test]
         public void T00QuickSort()
         {
-            var input = DrawRandom();
+            var input = Utilities.DrawRandom();
             var expected = input.OrderBy(i => i).ToList();
             var actual = Chapter10.P00QuickSort<int>.Sort(input);
             Assert.That(actual, Is.EqualTo(expected));
@@ -42,7 +32,7 @@ namespace Tests
         [Test]
         public void T00RecursiveBinarySearch()
         {
-            var array = CreateSearchable(out var member, out var nonMember);
+            var array = Utilities.CreateSearchableArray(out var member, out var nonMember);
             Console.WriteLine($"Finding member {member} and non-member {nonMember} in:");
             Console.WriteLine(array.Stringify());
 
@@ -60,8 +50,8 @@ namespace Tests
         [Test]
         public void T01SortedMerge()
         {
-            var aOrig = DrawRandom(5, -5, 10).OrderBy(i => i).ToList();
-            var b = DrawRandom(15, 0, 15).OrderBy(i => i).ToArray();
+            var aOrig = Utilities.DrawRandom(5, -5, 10).OrderBy(i => i).ToList();
+            var b = Utilities.DrawRandom(15, 0, 15).OrderBy(i => i).ToArray();
             var expected = aOrig.Concat(b).OrderBy(i => i).ToList();
             Console.WriteLine("Merging the following:");
             Console.WriteLine($" a = {aOrig.Stringify()}");
@@ -80,7 +70,7 @@ namespace Tests
         [Test]
         public void T03RotatedArray()
         {
-            var array = CreateSearchable(out var member, out var nonMember);
+            var array = Utilities.CreateSearchableArray(out var member, out var nonMember);
             var quarter = array.Length / 4;
             var half = array.Length / 2;
             var pivot = rng.Next(half - quarter, half + quarter);
@@ -101,31 +91,6 @@ namespace Tests
 
             actual = Chapter10.P03RotatedArray(array, nonMember, out index);
             Assert.That(actual, Is.False);
-        }
-
-        private int[] CreateSearchable(out int member, out int nonMember)
-        {
-            const int min = 0;
-            const int max = 35;
-            const int elementMin = 2;
-            const int elementMax = 10;
-            var lowerSectionBound = rng.Next(min + 3, max - 3);
-            var upperSectionBound = rng.Next(lowerSectionBound + 1, max);
-            nonMember = rng.Next(lowerSectionBound, upperSectionBound);
-
-            var lowerList = DrawRandom(rng.Next(elementMin, elementMax),
-                min, nonMember);
-            var upperList = DrawRandom(rng.Next(elementMin, elementMax),
-                nonMember + 1, max);
-
-            var fullArray = lowerList
-                .Concat(upperList)
-                .OrderBy(i => i)
-                .ToArray();
-
-            member = fullArray[rng.Next(fullArray.Length)];
-
-            return fullArray;
         }
     }
 }
