@@ -8,43 +8,6 @@ namespace Problems
     public static class Chapter15
     {
         /// <summary>
-        /// The dining table for philosophers.
-        /// </summary>
-        public class P03Table
-        {
-            /// <summary>
-            /// Chopsticks in the table.
-            /// </summary>
-            public List<P03Chopstick> Sticks { get; }
-
-            /// <summary>
-            /// Philosophers tryna get fed.
-            /// </summary>
-            public List<P03Dude> Dudes { get; }
-
-            /// <summary>
-            /// Create a table with a given number of philosphers and chopsticks.
-            /// </summary>
-            public P03Table(int num)
-            {
-                var nums = Enumerable.Range(0, num);
-                Sticks = nums.Select(i => new P03Chopstick(i)).ToList();
-                Dudes = nums.Select(i => new P03Dude(i, this)).ToList();
-            }
-
-            /// <summary>
-            /// Get a chopstick. Same num is left, +1 (ring array) is right. Locks if 
-            /// </summary>
-            public P03Chopstick GetChopstick(int num) =>
-                Sticks[(Sticks.Count + num) % Sticks.Count];
-
-            /// <summary>
-            /// Get a dining philosopher.
-            /// </summary>
-            public P03Dude GetDude(int num) => Dudes[num];
-        }
-
-        /// <summary>
         /// Chopsticks.
         /// </summary>
         public class P03Chopstick
@@ -71,11 +34,13 @@ namespace Problems
         public class P03Dude
         {
             /// <summary>
-            /// Waiting intervals.
+            /// Waiting interval.
             /// </summary>
             public const int TimeToWait = 50;
 
-            private int id;
+            private readonly int id;
+
+            private readonly P03Table table;
 
             /// <summary>
             /// Make a dude/dudette.
@@ -86,41 +51,10 @@ namespace Problems
                 this.table = table;
             }
 
-            P03Table table;
             /// <summary>
             /// Identifies this thing.
             /// </summary>
             public override string ToString() => $"P{id}";
-
-            /// <summary>
-            /// Get the left stick.
-            /// </summary>
-            private P03Chopstick GetLeftStick()
-            {
-                Console.WriteLine($"{this} wants left chopstick.");
-                var stick = table.GetChopstick(id);
-                Console.WriteLine($"{this} got {stick}!");
-                return stick;
-            }
-
-            /// <summary>
-            /// Eat.
-            /// </summary>
-            private void Eat()
-            {
-                Console.WriteLine($"{this} started eating.");
-                lock(GetLeftStick())
-                {
-                    Thread.Sleep(TimeToWait);
-
-                    lock(GetRightStick())
-                    {
-                        Console.WriteLine($"{this} is eating.");
-                        Thread.Sleep(TimeToWait);
-                    }
-                }
-                Console.WriteLine($"{this} finished eating.");
-            }
 
             /// <summary>
             /// Try to eat. If you wait too long before finishing, you will die (i.e. return false).
@@ -136,10 +70,40 @@ namespace Problems
                 // If thread terminates, there wasn't any deadlock. Return true.
                 if (a.Join(lifespan))
                     return true;
-                
+
                 // If we hit here, the thread timed out.
                 Console.WriteLine($"{this} died of starvation.");
                 return false;
+            }
+
+            /// <summary>
+            /// Eat.
+            /// </summary>
+            private void Eat()
+            {
+                Console.WriteLine($"{this} started eating.");
+                lock (GetLeftStick())
+                {
+                    Thread.Sleep(TimeToWait);
+
+                    lock (GetRightStick())
+                    {
+                        Console.WriteLine($"{this} is eating.");
+                        Thread.Sleep(TimeToWait);
+                    }
+                }
+                Console.WriteLine($"{this} finished eating.");
+            }
+
+            /// <summary>
+            /// Get the left stick.
+            /// </summary>
+            private P03Chopstick GetLeftStick()
+            {
+                Console.WriteLine($"{this} wants left chopstick.");
+                var stick = table.GetChopstick(id);
+                Console.WriteLine($"{this} got {stick}!");
+                return stick;
             }
 
             /// <summary>
@@ -152,6 +116,43 @@ namespace Problems
                 Console.WriteLine($"{this} got {stick}!");
                 return stick;
             }
+        }
+
+        /// <summary>
+        /// The dining table for philosophers.
+        /// </summary>
+        public class P03Table
+        {
+            /// <summary>
+            /// Create a table with a given number of philosphers and chopsticks.
+            /// </summary>
+            public P03Table(int num)
+            {
+                var nums = Enumerable.Range(0, num);
+                Sticks = nums.Select(i => new P03Chopstick(i)).ToList();
+                Dudes = nums.Select(i => new P03Dude(i, this)).ToList();
+            }
+
+            /// <summary>
+            /// Philosophers tryna get fed.
+            /// </summary>
+            public List<P03Dude> Dudes { get; }
+
+            /// <summary>
+            /// Chopsticks in the table.
+            /// </summary>
+            public List<P03Chopstick> Sticks { get; }
+
+            /// <summary>
+            /// Get a chopstick using the given index. Same num is left, +1 (ring array) is right.
+            /// </summary>
+            public P03Chopstick GetChopstick(int num) => 
+                Sticks[(Sticks.Count + num) % Sticks.Count];
+
+            /// <summary>
+            /// Get a dining philosopher.
+            /// </summary>
+            public P03Dude GetDude(int num) => Dudes[num];
         }
     }
 }

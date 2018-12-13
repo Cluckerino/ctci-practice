@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Problems;
+using System.Linq;
+
 namespace Tests
 {
     [TestFixture]
@@ -18,7 +16,7 @@ namespace Tests
             // Should be all true if no one starves.
             var results = table.Dudes
                 .AsParallel()
-                .Select(d=> d.TryToEat())
+                .Select(d => d.TryToEat())
                 .AsSequential()
                 .ToList();
             Assert.That(results.Count, Is.EqualTo(table.Dudes.Count));
