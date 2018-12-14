@@ -23,5 +23,17 @@ namespace Tests
             Assert.That(a, Is.EqualTo(expectedA));
             Assert.That(b, Is.EqualTo(expectedB));
         }
+
+        [Test]
+        public void T06SmallestDifference()
+        {
+            var a = new [] { 1, 3, 15, 11, 2 };
+            var b = new [] { 23, 127, 235, 19, 8 };
+            var expected = 3;
+
+            var actual = Chapter16.P06SmallestDifference(a, b);
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }
