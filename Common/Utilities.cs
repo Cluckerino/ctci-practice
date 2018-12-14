@@ -6,31 +6,12 @@ namespace Common
 {
     public static class Utilities
     {
+        private static Random rng = new Random();
+
         /// <summary>
         /// Create a binary string of this number.
         /// </summary>
         public static string AsBinary(this int num) => Convert.ToString(num, 2);
-
-        /// <summary>
-        /// Creates a string from the given sequence.
-        /// </summary>
-        public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";
-
-        private static Random rng = new Random();
-
-        /// <summary>
-        /// Create an array of random numbers.
-        /// </summary>
-        /// <param name="count">Number of items in the array.</param>
-        /// <param name="min">Inclusive min of random numbers to pick.</param>
-        /// <param name="max">Exclusive max of random numbers to pick.</param>
-        /// <returns>A list containing random numbers.</returns>
-        public static List<int> DrawRandom(int count = 10, int min = 0, int max = 20)
-        {
-            return Enumerable.Repeat(0, count)
-                .Select(_ => rng.Next(min, max))
-                .ToList();
-        }
 
         /// <summary>
         /// Creates a searchable array that will also provide a member and non-member.
@@ -62,5 +43,24 @@ namespace Common
 
             return fullArray;
         }
+
+        /// <summary>
+        /// Create an array of random numbers.
+        /// </summary>
+        /// <param name="count">Number of items in the array.</param>
+        /// <param name="min">Inclusive min of random numbers to pick.</param>
+        /// <param name="max">Exclusive max of random numbers to pick.</param>
+        /// <returns>A list containing random numbers.</returns>
+        public static List<int> DrawRandom(int count = 10, int min = 0, int max = 20)
+        {
+            return Enumerable.Repeat(0, count)
+                .Select(_ => rng.Next(min, max))
+                .ToList();
+        }
+
+        /// <summary>
+        /// Creates a string from the given sequence.
+        /// </summary>
+        public static string Stringify<T>(this IEnumerable<T> sequence) => $"[{string.Join(", ", sequence)}]";
     }
 }
