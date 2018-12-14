@@ -8,6 +8,69 @@ namespace Problems
     public static class Chapter04
     {
         /// <summary>
+        /// Do a DFS starting from the given node. Return the order of the search as a queue.
+        /// </summary>
+        public static Queue<GraphNode<int>> P00BreadthFirst(SetGraph<int> graph, int initialNodeVal)
+        {
+            var visInfo = new VisitedNodeInfo<int>();
+            var initialNode = graph[initialNodeVal];
+
+            var toVisit = new Queue<GraphNode<int>>();
+
+            visInfo.MarkVisited(initialNode);
+            toVisit.Enqueue(initialNode);
+
+            /// For BFS, marking a visited really means that it's been added to the queue. You won't
+            /// actually visit them until you dequeue.
+            while (toVisit.TryDequeue(out var nextNode))
+            {
+                // This is where the visiting will actually occur.
+
+                // Find unvisited children
+                var pending = nextNode.Children
+                    .Where(c => !visInfo.IsVisited(c));
+
+                foreach (var child in pending)
+                {
+                    visInfo.MarkVisited(child);
+                    toVisit.Enqueue(child);
+                }
+            }
+
+            return visInfo.Order;
+        }
+
+        /// <summary>
+        /// Do a DFS starting from the given node. Return the order of the search as a queue.
+        /// </summary>
+        public static Queue<GraphNode<int>> P00DepthFirst(SetGraph<int> graph, int initialNodeVal)
+        {
+            var visInfo = new VisitedNodeInfo<int>();
+            var initialNode = graph[initialNodeVal];
+
+            P00DepthFirst(initialNode, visInfo);
+
+            return visInfo.Order;
+        }
+
+        /// <summary>
+        /// Recursive call to do the DFS.
+        /// </summary>
+        /// <param name="currentNode">The current node to visit.</param>
+        /// <param name="visInfo">Object that contains how nodes are visited.</param>
+        public static void P00DepthFirst(GraphNode<int> currentNode, VisitedNodeInfo<int> visInfo)
+        {
+            if (visInfo.IsVisited(currentNode)) return;
+
+            visInfo.MarkVisited(currentNode);
+
+            // This is where the visiting will actually occur.
+
+            foreach (var child in currentNode.Children)
+                P00DepthFirst(child, visInfo);
+        }
+
+        /// <summary>
         /// Check if this tree is balanced (i.e. heightL and heightR within 1).
         /// </summary>
         public static bool P04CheckBalanced<T>(BinaryTreeNode<T> head)
