@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using NUnit.Framework;
 using Problems;
 
@@ -32,6 +33,24 @@ namespace Tests
             var expected = 3;
 
             var actual = Chapter16.P06SmallestDifference(a, b);
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [TestCase(1023, 1022)]
+        [TestCase(1022, 1023)]
+        [TestCase(512, 513)]
+        [TestCase(513, 512)]
+        [TestCase(1022, 513)]
+        [TestCase(513, 1022)]
+        public void T07NumberMax(int a, int b)
+        {
+            var expected = Math.Max(a, b);
+
+            Console.WriteLine($"a: {a} {a.AsBinary()}");
+            Console.WriteLine($"b: {b} {b.AsBinary()}");
+
+            var actual = Chapter16.P07NumberMax(a, b);
 
             Assert.That(actual, Is.EqualTo(expected));
         }
