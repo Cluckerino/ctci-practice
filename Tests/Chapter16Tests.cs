@@ -43,6 +43,12 @@ namespace Tests
         [TestCase(513, 512)]
         [TestCase(1022, 513)]
         [TestCase(513, 1022)]
+        [TestCase(-512, 512)]
+        [TestCase(512, -512)]
+        [TestCase(-512, -513)]
+        [TestCase(-513, -512)]
+        [TestCase(-1, 0)]
+        [TestCase(0, -1)]
         public void T07NumberMax(int a, int b)
         {
             var expected = Math.Max(a, b);

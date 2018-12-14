@@ -52,6 +52,16 @@ namespace Problems
         /// </summary>
         public static int P07NumberMax(int a, int b)
         {
+            // 1 if positive, 0 if negative.
+            var signA = ((a >> 31) & 1) ^ 1;
+            var signB = ((b >> 31) & 1) ^ 1;
+
+            // 1 if the different, 0 if the same.
+            var diffSign = signA ^ signB;
+
+            // 1 if different sign and A is greater. O if B is greater or same sign.
+            var aSignGreater = diffSign * signA;
+
             // Max bit is the comparer 1 for a, 0 for b.
             var maxBit = 0;
 
@@ -72,9 +82,13 @@ namespace Problems
                 // If diff, will throw away current answer by shifting it away. pickA is only
                 // siginificant if set (i.e. diff AND bitA > bitB).
                 maxBit = (maxBit >> diff) + pickA;
+
+                // Sign override: if different signs, maxBit should always be A or B. Have to do this
+                // 32 times because no flow controls are allowed.
+                maxBit = maxBit * (diffSign ^ 1) + aSignGreater;
             }
 
-            return maxBit * a + (~maxBit & 1) * b;
+            return maxBit * a + (maxBit ^ 1) * b;
         }
     }
 }
